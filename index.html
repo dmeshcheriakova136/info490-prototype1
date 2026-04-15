@@ -749,45 +749,27 @@
       </div>
     </div>
 
-    <!-- AI PREP SCREEN - Chat with mode chips -->
+    <!-- AI PREP SCREEN - Conversational onboarding -->
     <div id="screen-aiprep" class="screen" style="height:calc(100% - 20px);display:none;flex-direction:column;">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-top:4px;flex-shrink:0;">
-        <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg, var(--blue-500), var(--blue-600));display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,102,255,.25);">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>
-        </div>
-        <div style="flex:1;">
-          <div style="font-size:20px;font-weight:700;color:var(--gray-900);">AI Assistant</div>
-          <div style="font-size:12px;color:var(--green-500);display:flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--green-500);"></span> Online</div>
-        </div>
+      <!-- Progress dots -->
+      <div style="display:flex;justify-content:center;gap:6px;padding:8px 0 12px;flex-shrink:0;">
+        <div class="pdot active" id="pdot0" style="width:24px;height:8px;border-radius:4px;background:var(--blue-500);transition:all .3s;"></div>
+        <div class="pdot" id="pdot1" style="width:8px;height:8px;border-radius:50%;background:var(--gray-200);transition:all .3s;"></div>
+        <div class="pdot" id="pdot2" style="width:8px;height:8px;border-radius:50%;background:var(--gray-200);transition:all .3s;"></div>
+        <div class="pdot" id="pdot3" style="width:8px;height:8px;border-radius:50%;background:var(--gray-200);transition:all .3s;"></div>
+        <div class="pdot" id="pdot4" style="width:8px;height:8px;border-radius:50%;background:var(--gray-200);transition:all .3s;"></div>
       </div>
 
       <!-- Chat messages -->
-      <div id="aiChatMessages" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding-bottom:8px;min-height:0;">
-        <div style="display:flex;gap:8px;align-items:flex-end;max-width:85%;">
-          <div style="width:32px;height:32px;border-radius:50%;background:var(--blue-100);color:var(--blue-500);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;">AI</div>
-          <div style="background:var(--gray-50);border-radius:16px 16px 16px 4px;padding:12px 16px;font-size:14px;line-height:20px;color:var(--gray-900);">Hi Alex! 👋 I can help you prepare for your next interpretation. Pick a mode below to get started — generate a glossary or practice a live roleplay.</div>
-        </div>
-      </div>
-
-      <!-- Mode chips above input -->
-      <div style="display:flex;gap:8px;padding:8px 0;flex-shrink:0;overflow-x:auto;">
-        <button onclick="pickAIMode('glossary', this)" class="ai-mode-chip" style="display:flex;align-items:center;gap:6px;padding:10px 14px;border-radius:20px;background:var(--blue-50);color:var(--blue-500);border:1.5px solid var(--blue-500);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;flex-shrink:0;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
-          Create Tailored Glossary
-        </button>
-        <button onclick="pickAIMode('practice', this)" class="ai-mode-chip" style="display:flex;align-items:center;gap:6px;padding:10px 14px;border-radius:20px;background:white;color:var(--gray-900);border:1.5px solid var(--gray-200);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;flex-shrink:0;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-          Practice Interpretation
-        </button>
-      </div>
+      <div id="aiChatMessages" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding-bottom:12px;min-height:0;"></div>
 
       <!-- Input bar -->
       <div style="display:flex;align-items:center;gap:8px;padding:8px 0 0;border-top:1px solid var(--gray-100);flex-shrink:0;">
         <button style="width:44px;height:44px;border-radius:50%;border:none;background:var(--gray-50);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gray-500)" stroke-width="2" stroke-linecap="round"><rect x="9" y="1" width="6" height="11" rx="3"/><path d="M19 10v1a7 7 0 01-14 0v-1"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
         </button>
-        <input id="aiInputField" type="text" placeholder="Type your message..." style="flex:1;height:44px;border-radius:22px;background:var(--gray-50);border:none;padding:0 16px;font-size:14px;font-family:inherit;color:var(--gray-900);outline:none;">
-        <button onclick="sendAIMessage()" style="width:44px;height:44px;border-radius:50%;border:none;background:var(--blue-500);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+        <input id="aiInputField" type="text" placeholder="Type a message..." style="flex:1;height:44px;border-radius:22px;background:var(--gray-50);border:none;padding:0 16px;font-size:14px;font-family:inherit;color:var(--gray-900);outline:none;">
+        <button style="width:44px;height:44px;border-radius:50%;border:none;background:var(--blue-500);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
       </div>
@@ -819,7 +801,10 @@ function switchTab(name, el) {
   document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
   const target = document.getElementById('screen-' + name);
   target.classList.add('active');
-  if (name === 'aiprep') target.style.display = 'flex';
+  if (name === 'aiprep') {
+    target.style.display = 'flex';
+    aiStartConversation();
+  }
   if (el && el.classList.contains('tab-item')) el.classList.add('active');
 }
 
@@ -831,39 +816,237 @@ function showSubScreen(name) {
   document.querySelector('.screen-content').scrollTop = 0;
 }
 
-function pickAIMode(mode, el) {
-  document.querySelectorAll('.ai-mode-chip').forEach(c => {
-    c.style.background = 'white';
-    c.style.color = 'var(--gray-900)';
-    c.style.borderColor = 'var(--gray-200)';
-  });
-  el.style.background = 'var(--blue-50)';
-  el.style.color = 'var(--blue-500)';
-  el.style.borderColor = 'var(--blue-500)';
+/* ===== AI Prep Conversational Flow ===== */
+var aiSelections = { lang:'', field:'', setting:'', details:'' };
+var aiStarted = false;
 
-  const msgs = document.getElementById('aiChatMessages');
-  const userText = mode === 'glossary' ? 'Create Tailored Glossary' : 'Practice Interpretation';
-  msgs.innerHTML += '<div style="align-self:flex-end;max-width:85%;"><div style="display:flex;gap:8px;align-items:flex-end;flex-direction:row-reverse;"><div style="width:32px;height:32px;border-radius:50%;background:var(--gray-100);color:var(--gray-500);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;">A</div><div style="background:var(--blue-500);color:white;border-radius:16px 16px 4px 16px;padding:12px 16px;font-size:14px;line-height:20px;">' + userText + '</div></div></div>';
+var aiSampleTerms = {
+  Medical: [['Knee replacement','Reemplazo de rodilla'],['Prosthesis','Prótesis'],['Range of motion','Rango de movimiento'],['Physical therapy','Fisioterapia'],['Blood thinner','Anticoagulante'],['Incision','Incisión'],['Swelling','Hinchazón'],['Follow-up','Cita de seguimiento'],['Inflammation','Inflamación'],['Sutures','Suturas']],
+  Legal: [['Plaintiff','Demandante'],['Defendant','Demandado'],['Testimony','Testimonio'],['Evidence','Evidencia'],['Verdict','Veredicto'],['Bail','Fianza'],['Custody','Custodia'],['Sentence','Sentencia'],['Appeal','Apelación'],['Subpoena','Citación']],
+  Education: [['IEP','Plan educativo individualizado'],['Accommodation','Adaptación'],['Assessment','Evaluación'],['Grade level','Nivel de grado'],['Special education','Educación especial'],['Disability','Discapacidad'],['Progress report','Informe de progreso'],['Enrollment','Inscripción'],['Attendance','Asistencia'],['Transcript','Expediente académico']],
+  Business: [['Revenue','Ingresos'],['Stakeholder','Parte interesada'],['Merger','Fusión'],['Budget','Presupuesto'],['Invoice','Factura'],['Contract','Contrato'],['Deadline','Fecha límite'],['Compliance','Cumplimiento'],['Negotiation','Negociación'],['Strategy','Estrategia']],
+  'Community Services': [['Benefits','Beneficios'],['Eligibility','Elegibilidad'],['Case worker','Trabajador social'],['Housing assistance','Asistencia de vivienda'],['Application','Solicitud'],['Income verification','Verificación de ingresos'],['Dependent','Dependiente'],['Referral','Referencia'],['Shelter','Refugio'],['Counseling','Consejería']]
+};
 
-  setTimeout(() => {
-    const reply = mode === 'glossary'
-      ? 'Great! Tell me about your upcoming assignment — what field, language pair, and any specific context? I can also blend with your existing glossaries.'
-      : 'Perfect! I\'ll play both parties in a realistic scenario. What setting would you like to practice? (Medical, Legal, Education, etc.)';
-    msgs.innerHTML += '<div style="display:flex;gap:8px;align-items:flex-end;max-width:85%;"><div style="width:32px;height:32px;border-radius:50%;background:var(--blue-100);color:var(--blue-500);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;">AI</div><div style="background:var(--gray-50);border-radius:16px 16px 16px 4px;padding:12px 16px;font-size:14px;line-height:20px;color:var(--gray-900);">' + reply + '</div></div>';
-    msgs.scrollTop = msgs.scrollHeight;
-  }, 600);
+function aiChat() { return document.getElementById('aiChatMessages'); }
+function aiScroll() { setTimeout(function(){ aiChat().scrollTop = aiChat().scrollHeight; }, 50); }
 
-  msgs.scrollTop = msgs.scrollHeight;
+function aiAddAI(text) {
+  var div = document.createElement('div');
+  div.style.cssText = 'display:flex;gap:8px;align-items:flex-end;max-width:85%;';
+  div.innerHTML = '<div style="width:32px;height:32px;border-radius:50%;background:var(--blue-100);color:var(--blue-500);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;">AI</div><div style="background:var(--gray-50);border-radius:16px 16px 16px 4px;padding:12px 16px;font-size:14px;line-height:20px;color:var(--gray-900);">' + text + '</div>';
+  aiChat().appendChild(div);
+  aiScroll();
 }
 
-function sendAIMessage() {
-  const input = document.getElementById('aiInputField');
-  const text = input.value.trim();
-  if (!text) return;
-  input.value = '';
-  const msgs = document.getElementById('aiChatMessages');
-  msgs.innerHTML += '<div style="align-self:flex-end;max-width:85%;"><div style="display:flex;gap:8px;align-items:flex-end;flex-direction:row-reverse;"><div style="width:32px;height:32px;border-radius:50%;background:var(--gray-100);color:var(--gray-500);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;">A</div><div style="background:var(--blue-500);color:white;border-radius:16px 16px 4px 16px;padding:12px 16px;font-size:14px;line-height:20px;">' + text + '</div></div></div>';
-  msgs.scrollTop = msgs.scrollHeight;
+function aiAddUser(text) {
+  var div = document.createElement('div');
+  div.style.cssText = 'align-self:flex-end;max-width:85%;';
+  div.innerHTML = '<div style="display:flex;gap:8px;align-items:flex-end;flex-direction:row-reverse;"><div style="width:32px;height:32px;border-radius:50%;background:var(--gray-100);color:var(--gray-500);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;">U</div><div style="background:var(--blue-500);color:white;border-radius:16px 16px 4px 16px;padding:12px 16px;font-size:14px;line-height:20px;">' + text + '</div></div>';
+  aiChat().appendChild(div);
+  aiScroll();
+}
+
+function aiUpdateProgress(step) {
+  for (var i=0;i<5;i++) {
+    var d = document.getElementById('pdot'+i);
+    if (!d) continue;
+    if (i === step) { d.style.width='24px'; d.style.height='8px'; d.style.borderRadius='4px'; d.style.background='var(--blue-500)'; }
+    else if (i < step) { d.style.width='8px'; d.style.height='8px'; d.style.borderRadius='50%'; d.style.background='var(--green-500)'; }
+    else { d.style.width='8px'; d.style.height='8px'; d.style.borderRadius='50%'; d.style.background='var(--gray-200)'; }
+  }
+}
+
+function aiStartConversation() {
+  if (aiStarted) return;
+  aiStarted = true;
+  aiChat().innerHTML = '';
+  aiUpdateProgress(0);
+  setTimeout(function(){
+    aiAddAI("Hi Alex! 👋 I'm your AI prep assistant. Let's get you ready for your next interpreting assignment.");
+    setTimeout(function(){
+      aiAddAI("First — <strong>what's your language pair?</strong>");
+      setTimeout(aiShowLanguages, 400);
+    }, 800);
+  }, 300);
+}
+
+function aiShowLanguages() {
+  var div = document.createElement('div');
+  div.id = 'aiLangGrid';
+  div.style.cssText = 'display:grid;grid-template-columns:repeat(2,1fr);gap:8px;max-width:85%;padding-left:40px;';
+  var langs = [['🇪🇸','Spanish ↔ English'],['🇦🇷','Arabic ↔ English'],['🇺🇦','Ukrainian ↔ English'],['🇹🇷','Turkish ↔ English'],['🇫🇷','French ↔ English'],['🇨🇳','Mandarin ↔ English'],['🇵🇰','Urdu ↔ English'],['🇦🇫','Pashto ↔ English']];
+  var html = '';
+  for (var i=0;i<langs.length;i++) {
+    html += '<button class="ai-lang-opt" onclick="aiSelectLang(this,\'' + langs[i][1] + '\')" style="padding:12px;border-radius:14px;background:white;border:1.5px solid var(--gray-200);font-size:13px;font-weight:500;color:var(--gray-900);cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:8px;"><span style="font-size:18px;">' + langs[i][0] + '</span>' + langs[i][1] + '</button>';
+  }
+  div.innerHTML = html;
+  aiChat().appendChild(div);
+  aiScroll();
+}
+
+function aiSelectLang(el, lang) {
+  aiSelections.lang = lang;
+  var opts = document.querySelectorAll('.ai-lang-opt');
+  for (var i=0;i<opts.length;i++) {
+    if (opts[i] === el) { opts[i].style.background='var(--blue-500)'; opts[i].style.color='white'; opts[i].style.borderColor='var(--blue-500)'; }
+    else { opts[i].style.opacity='.4'; opts[i].style.pointerEvents='none'; }
+  }
+  setTimeout(function(){
+    aiAddUser(lang);
+    setTimeout(function(){
+      aiUpdateProgress(1);
+      aiAddAI('Great, <strong>' + lang + '</strong>! Now — <strong>what field is your assignment in?</strong>');
+      setTimeout(aiShowFields, 400);
+    }, 600);
+  }, 300);
+}
+
+function aiShowFields() {
+  var div = document.createElement('div');
+  div.id = 'aiFieldGrid';
+  div.style.cssText = 'display:flex;flex-wrap:wrap;gap:8px;max-width:85%;padding-left:40px;';
+  var fields = ['Medical','Legal','Education','Business','Community Services'];
+  var html = '';
+  for (var i=0;i<fields.length;i++) {
+    html += '<button class="ai-field-opt" onclick="aiSelectField(this,\'' + fields[i] + '\')" style="padding:10px 18px;border-radius:20px;background:white;border:1.5px solid var(--blue-500);color:var(--blue-500);font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;">' + fields[i] + '</button>';
+  }
+  div.innerHTML = html;
+  aiChat().appendChild(div);
+  aiScroll();
+}
+
+function aiSelectField(el, field) {
+  aiSelections.field = field;
+  var opts = document.querySelectorAll('.ai-field-opt');
+  for (var i=0;i<opts.length;i++) {
+    if (opts[i] === el) { opts[i].style.background='var(--blue-500)'; opts[i].style.color='white'; }
+    else { opts[i].style.opacity='.4'; opts[i].style.pointerEvents='none'; }
+  }
+  setTimeout(function(){
+    aiAddUser(field);
+    setTimeout(function(){
+      aiUpdateProgress(2);
+      aiAddAI('Got it — <strong>' + field + '</strong>. <strong>What\'s the specific setting?</strong>');
+      setTimeout(function(){ aiShowSettings(field); }, 400);
+    }, 600);
+  }, 300);
+}
+
+function aiShowSettings(field) {
+  var settings = {
+    Medical:['Hospital clinic','Emergency room','Pharmacy','Specialist office','Telehealth'],
+    Legal:['Courtroom','Deposition','Immigration hearing','Attorney meeting','Police station'],
+    Education:['IEP meeting','Parent-teacher','Enrollment','School counselor','Classroom'],
+    Business:['Board meeting','Negotiation','Conference','Client call','HR meeting'],
+    'Community Services':['Social services','Housing authority','Food bank','Shelter intake','Benefits office']
+  };
+  var list = settings[field] || settings.Medical;
+  var div = document.createElement('div');
+  div.id = 'aiSettingGrid';
+  div.style.cssText = 'display:flex;flex-wrap:wrap;gap:8px;max-width:85%;padding-left:40px;';
+  var html = '';
+  for (var i=0;i<list.length;i++) {
+    html += '<button class="ai-setting-opt" onclick="aiSelectSetting(this,\'' + list[i] + '\')" style="padding:10px 18px;border-radius:20px;background:white;border:1.5px solid var(--blue-500);color:var(--blue-500);font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;">' + list[i] + '</button>';
+  }
+  div.innerHTML = html;
+  aiChat().appendChild(div);
+  aiScroll();
+}
+
+function aiSelectSetting(el, setting) {
+  aiSelections.setting = setting;
+  var opts = document.querySelectorAll('.ai-setting-opt');
+  for (var i=0;i<opts.length;i++) {
+    if (opts[i] === el) { opts[i].style.background='var(--blue-500)'; opts[i].style.color='white'; }
+    else { opts[i].style.opacity='.4'; opts[i].style.pointerEvents='none'; }
+  }
+  setTimeout(function(){
+    aiAddUser(setting);
+    setTimeout(function(){
+      aiUpdateProgress(3);
+      aiAddAI('Almost there! <strong>Any extra details?</strong> The more context, the better your glossary. Or tap <strong>Skip</strong> to generate now.');
+      setTimeout(aiShowDetailsInput, 400);
+    }, 600);
+  }, 300);
+}
+
+function aiShowDetailsInput() {
+  var div = document.createElement('div');
+  div.id = 'aiDetailsWrap';
+  div.style.cssText = 'max-width:100%;width:100%;display:flex;flex-direction:column;gap:8px;';
+  div.innerHTML = '<textarea id="aiDetailsText" placeholder="e.g., Patient had knee replacement 6 weeks ago, post-op check-up..." style="width:100%;min-height:90px;border-radius:14px;background:var(--gray-50);border:1.5px solid var(--gray-200);padding:12px 16px;font-size:14px;font-family:inherit;color:var(--gray-900);resize:none;outline:none;line-height:20px;"></textarea><div style="display:flex;gap:8px;justify-content:flex-end;"><button onclick="aiSkipDetails()" style="padding:10px 20px;border-radius:20px;background:var(--gray-50);color:var(--gray-900);border:1px solid var(--gray-200);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">Skip</button><button onclick="aiSubmitDetails()" style="padding:10px 20px;border-radius:20px;background:var(--blue-500);color:white;border:none;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">Send</button></div>';
+  aiChat().appendChild(div);
+  aiScroll();
+}
+
+function aiSkipDetails() {
+  document.getElementById('aiDetailsWrap').style.display = 'none';
+  aiAddUser('No extra details — generate it!');
+  aiGenerateTerms();
+}
+
+function aiSubmitDetails() {
+  var text = document.getElementById('aiDetailsText').value.trim();
+  document.getElementById('aiDetailsWrap').style.display = 'none';
+  if (text) { aiSelections.details = text; aiAddUser(text); }
+  else { aiAddUser('No extra details — generate it!'); }
+  aiGenerateTerms();
+}
+
+function aiGenerateTerms() {
+  aiUpdateProgress(4);
+  // typing indicator
+  var typing = document.createElement('div');
+  typing.id = 'aiTypingIndicator';
+  typing.style.cssText = 'display:flex;gap:8px;align-items:flex-end;';
+  typing.innerHTML = '<div style="width:32px;height:32px;border-radius:50%;background:var(--blue-100);color:var(--blue-500);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;">AI</div><div style="background:var(--gray-50);border-radius:16px 16px 16px 4px;padding:14px 18px;">Generating...</div>';
+  aiChat().appendChild(typing);
+  aiScroll();
+
+  setTimeout(function(){
+    var t = document.getElementById('aiTypingIndicator');
+    if (t) t.remove();
+    aiAddAI("Here's your personalized <strong>" + aiSelections.field + "</strong> glossary for <strong>" + aiSelections.lang + "</strong> at a <strong>" + aiSelections.setting + "</strong>:");
+    setTimeout(aiShowTermsList, 400);
+  }, 1800);
+}
+
+function aiShowTermsList() {
+  var terms = aiSampleTerms[aiSelections.field] || aiSampleTerms.Medical;
+  var card = document.createElement('div');
+  card.style.cssText = 'background:white;border:1px solid var(--gray-100);border-radius:16px;overflow:hidden;max-width:100%;width:100%;';
+  var header = '<div style="background:linear-gradient(135deg,var(--blue-50),var(--blue-100));padding:16px;display:flex;align-items:center;gap:10px;"><div style="width:40px;height:40px;border-radius:12px;background:var(--blue-500);display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg></div><div><div style="font-size:16px;font-weight:600;color:var(--gray-900);">' + aiSelections.field + ' — ' + aiSelections.setting + '</div><div style="font-size:12px;color:var(--gray-500);">' + terms.length + ' terms · ' + aiSelections.lang + '</div></div></div>';
+  var body = '<div style="padding:4px 16px;">';
+  for (var i=0;i<terms.length;i++) {
+    body += '<div style="display:flex;align-items:center;padding:12px 0;border-bottom:1px solid var(--gray-100);gap:12px;"><div style="width:28px;height:28px;border-radius:50%;background:var(--blue-50);color:var(--blue-500);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + (i+1) + '</div><div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--gray-900);">' + terms[i][0] + '</div><div style="font-size:13px;color:var(--blue-500);font-weight:500;margin-top:2px;">' + terms[i][1] + '</div></div><button onclick="aiToggleSave(this)" style="width:34px;height:34px;border-radius:50%;border:1.5px solid var(--blue-500);background:var(--blue-50);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-500)" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>';
+  }
+  body += '</div>';
+  var actions = '<div style="padding:12px 16px;border-top:1px solid var(--gray-100);display:flex;gap:8px;"><button onclick="aiEditTerms()" style="flex:1;padding:12px;border-radius:12px;background:var(--gray-50);color:var(--gray-900);border:1px solid var(--gray-200);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit</button><button onclick="aiCreateDatabase()" style="flex:1.3;padding:12px;border-radius:12px;background:var(--blue-500);color:white;border:none;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Create New Database</button></div>';
+  card.innerHTML = header + body + actions;
+  aiChat().appendChild(card);
+  aiScroll();
+}
+
+function aiToggleSave(btn) {
+  if (btn.dataset.saved === '1') {
+    btn.dataset.saved = '0';
+    btn.style.background = 'var(--blue-50)';
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue-500)" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+  } else {
+    btn.dataset.saved = '1';
+    btn.style.background = 'var(--green-500)';
+    btn.style.borderColor = 'var(--green-500)';
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  }
+}
+
+function aiCreateDatabase() {
+  aiAddAI('✅ Saved as a new glossary! You can find it in your <strong>Glossary</strong> tab.');
+}
+
+function aiEditTerms() {
+  aiAddAI('Which term would you like to edit? You can tap the + button next to any term to save or remove it from your glossary.');
 }
 
 function selectGlossChip(el) {
